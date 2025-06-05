@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <h1 class="glowing-text">MEMORY OF SIXTH GRADE</h1>
+
+<style>
+.glowing-text {
+    color: #fff;
+    text-align: center;
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #ff00de,
+        0 0 30px #ff00de,
+        0 0 40px #ff00de;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    font-size: 3rem;
+    margin: 20px 0;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px #ff00de,
+            0 0 30px #ff00de;
+    }
+    to {
+        text-shadow: 
+            0 0 10px #fff,
+            0 0 20px #ff4da6,
+            0 0 30px #ff4da6,
+            0 0 40px #ff4da6;
+    }
+}
+</style>
+<head>
+  <meta charset="UTF-8" />
+  <title>Slideshow with Welcome Password Overlay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #3a8dde 0%, #7b2ff2 100%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+    #passwordOverlay {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg,#FFD700 0%, #00FF7F 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .welcome-letter {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.8);
+      display: inline-block;
+      animation: welcomeIn 0.5s forwards;
+      background: linear-gradient(90deg, #0066ff, #9933ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-size: 5em;
+      font-weight: bold;
+    }
+    .welcome-letter:nth-child(1) { animation-delay: 0s; }
+    .welcome-letter:nth-child(2) { animation-delay: 0.1s; }
+    .welcome-letter:nth-child(3) { animation-delay: 0.2s; }
+    .welcome-letter:nth-child(4) { animation-delay: 0.3s; }
+    .welcome-letter:nth-child(5) { animation-delay: 0.4s; }
+    .welcome-letter:nth-child(6) { animation-delay: 0.5s; }
+    .welcome-letter:nth-child(7) { animation-delay: 0.6s; }
+    @keyframes welcomeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    #passwordBox {
+      background: rgba(255,255,255,0.95);
+      padding: 40px 32px;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      text-align: center;
+      margin-top: 24px;
+    }
+    #passwordInput {
+      padding: 12px 16px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      width: 220px;
+      margin-bottom: 16px;
+    }
+    #submitBtn {
+      padding: 10px 32px;
+      font-size: 1em;
+      border-radius: 8px;
+      background: #0072ff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    #errorMessage {
+      color: red;
+      margin-top: 12px;
+      display: none;
+    }
+    #greetingCard {
+      background: rgba(255,255,255,0.85);
+      padding: 24px 32px;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      margin-top: 32px;
+      min-width: 320px;
+      max-width: 90vw;
+      text-align: center;
+      display: none;
+    }
+    #greetingCard div {
+      margin: 4px 0;
+      color: #0072ff;
+    }
+    .slideshow-container {
+      width: 90vw;
+      max-width: 800px;
+      height: 450px;
+      margin: 80px auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+      background: #000;
+      display: none;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slide.active {
+      opacity: 1;
+      position: relative;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="passwordOverlay">
+  <div style="display:flex;justify-content:center;gap:0.1em;">
+    <span class="welcome-letter">W</span>
+    <span class="welcome-letter">E</span>
+    <span class="welcome-letter">L</span>
+    <span class="welcome-letter">C</span>
+    <span class="welcome-letter">O</span>
+    <span class="welcome-letter">M</span>
+    <span class="welcome-letter">E</span>
+  </div>
+  <div id="passwordBox">
+    <h2 style="margin-bottom: 24px; color: #0072ff;">Enter Password</h2>
+    <input id="passwordInput" type="password" placeholder="Password" />
+    <br>
+    <button id="submitBtn">Enter</button>
+    <div id="errorMessage">Wrong password. Try again.</div>
+  </div>
+  <div id="greetingCard">
+    <div id="greetingText" style="font-size: 1.8em; font-weight: bold;"></div>
+    <div id="greetingDate"></div>
+    <div id="greetingTime" style="color: #444;"></div>
+  
+  
+  </div>
+</div>
+<div class="about-section">
+<div class="slideshow-container" id="slideshow">
+  <div class="slide active">
+    <img src="https://dl.dropboxusercontent.com/scl/fi/0gwk5vsapaip5hasgu6hz/IMG-20250517-WA0000.jpg?rlkey=hvbahcmjo23dk94g073pmee2r" />
+  </div>
+  <div class="slide">
+    <img src="https://dl.dropboxusercontent.com/scl/fi/4mfiftsgghphxo1bmhgnb/IMG-20250516-WA0002.jpg?rlkey=pwx4oz0sldqi2xo1bmalvejzl" />
+  </div>
+  <div class="slide">
+    <img src="https://dl.dropboxusercontent.com/scl/fi/fk1a3588iod2bu9aos2o9/IMG-20250510-WA0028.jpg?rlkey=n6q28kj2bzjiczqvp4yq8na8b" />
+  </div>
+<div class="slide">
+  <img src="https://dl.dropboxusercontent.com/scl/fi/soggf5gfn4b3tsrh3rdfh/IMG-20250510-WA0000.jpg?rlkey=ei74eoyvckxlf3wt26g2eu60z" />
+</div>
+
+<script>
+
+  const PASSWORD = "2025";
+  const passwordOverlay = document.getElementById('passwordOverlay');
+  const passwordInput = document.getElementById('passwordInput');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMessage = document.getElementById('errorMessage');
+  const slideshow = document.getElementById('slideshow');
+  const greetingCard = document.getElementById('greetingCard');
+
+  function updateGreetingCard() {
+    const now = new Date();
+    const hour = now.getHours();
+    let greeting = "Hello!";
+    if (hour >= 5 && hour < 12) greeting = "Good Morning!";
+    else if (hour >= 12 && hour < 18) greeting = "Good Afternoon!";
+    else if (hour >= 18 && hour < 22) greeting = "Good Evening!";
+    else greeting = "Good Night!";
+
+    const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const day = dayNames[now.getDay()];
+    const date = now.getDate();
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+    const time = now.toLocaleTimeString();
+
+    document.getElementById('greetingText').textContent = greeting;
+    document.getElementById('greetingDate').textContent = `${day}, ${date} ${month} ${year}`;
+    document.getElementById('greetingTime').textContent = `Time: ${time}`;
+  }
+
+  function checkPassword() {
+    if (passwordInput.value.trim().toUpperCase() === PASSWORD) {
+      errorMessage.style.display = 'none';
+      passwordOverlay.style.display = 'none';
+      slideshow.style.display = 'block';
+      greetingCard.style.display = 'block';
+      updateGreetingCard();
+      setInterval(updateGreetingCard, 1000);
+      startSlideshow();
+    } else {
+      errorMessage.style.display = 'block';
+    }
+  }
+
+  passwordInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkPassword();
+  });
+  submitBtn.addEventListener('click', checkPassword);
+
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+  }
+
+  function startSlideshow() {
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 4000);
+  }
+  
+</script>
+<div style="position:fixed; bottom:12px; right:18px; color:#fff; font-size:0.5em; opacity:0.7; z-index:1000; font-family:Arial,sans-serif; pointer-events:none;">
+  &copy; D4RIXXY
+</div>
+
+</body>
+</html>
